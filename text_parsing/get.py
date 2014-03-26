@@ -5,12 +5,17 @@ url = 'http://spisok.mobi/%D0%BF%D0%BE%D0%BB%D0%BD%D1%8B%D0%B9-%D1%81%D0%BF%D0%B
 html = 'F:\\tmp\\py\\test.html'
 png = 'F:\\tmp\\py\\page.png'
 
-#PhantomJS wrapper
-import subprocess
-subprocess.call(['save.cmd', url, html, png])
+def url2file(url, html, png):
+    """PhantomJS wrapper
+    url - http://name.tld
+    html - where to save page code (html)
+    png - where to save rendered page (image)"""
+    import subprocess
+    code = subprocess.call(['save.cmd', url, html, png])
+    return code
 
 def file2text(path):
-    """Read utf-8 file from path"""    
+    """Reads utf-8 file from path"""    
     path = str(path)
     import codecs
     f = codecs.open(path, 'r', encoding='utf-8')
@@ -18,5 +23,6 @@ def file2text(path):
     f.close()
     return text
 
+url2file(url, html, png)
 text = file2text(html)
 print(text)
