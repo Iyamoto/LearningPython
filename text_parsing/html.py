@@ -8,13 +8,19 @@ def file2text(path):
     return text
 
 def rebuild(id, items):
+    print('Start of:',id)
     for child in items[id].getchildren():
+        #print(child.attrib)
         if child.tag=='a':
-            print(child.attrib['href'])
-            print(child.attrib['title'])
+            if child.attrib.has_key('href'):
+                print(child.attrib['href'])
+            if child.attrib.has_key('title'):
+                print(child.attrib['title'])
         if child.text!=None:
             print(child.text)
-    items[id].text_content()        
+    #items[id].text_content()
+    print('End of:',id)
+    print()
     return None
 
 path = 'F:\\tmp\\py\\test.html'
@@ -27,20 +33,24 @@ items = {}
 from lxml import html
 tree = html.document_fromstring(text)
 id=0
+c=0
 for element in tree.body.iter():
     items[id] = element
     pool = ()
     save = False
-    
+    a=0
     for child in element.getchildren():
         if len(element.getchildren())>2:# Filter by amount of tags
             pool += (child.tag,)
             if child.tag == 'a':# Filter by tag (a href)
                 save = True
-    if save:
+                a+=1
+    if save and a==1:
         data[id] = data.get(id,(element.tag,)) + pool
+        c+=1
     id+=1
-   
+print('Good blocks:',c)   
 #for k,v in data.items(): print(k,v)
 
-rebuild(671,items)
+for id in data.keys():
+    rebuild(id,items)
