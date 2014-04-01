@@ -51,22 +51,42 @@ def getID(s):
     id = hashlib.md5(s.encode('utf-8')).hexdigest()
     return id
 
+def getSize(items):
+    return items[1]
+
+def showData(data):
+    for item in data:
+        print(item[0],item[1])
+    return None    
+
 #saveUrlsfromSerp('urls.txt')
 
 urls = file2list('urls.txt')
 urls.sort()
 print(len(urls))
 datadir = 'R:\\lucid\\anomaly\\0\\data\\'
+data = []
 
 for url in urls:
     domain = getDomain(url)
     id = getID(domain)
-    print(url, domain, id)
-    if os.path.isfile(os.path.join(datadir, id)) == False:
-        try:
-            urllib.request.urlretrieve(url, os.path.join(datadir, id))
-        except urllib.error.HTTPError:
-            print('error')
+    # TODO get date from index
+    # TODO get domain whois
+    # TODO get IP
+    datafile = os.path.join(datadir, id)
+##    if os.path.isfile(datafile) == False:
+##        try:
+##            urllib.request.urlretrieve(url, datafile)          
+##        except urllib.error.HTTPError:
+##            print('error')
+##            continue
+    if os.path.isfile(datafile) == True:
+        size = os.path.getsize(datafile)
+        #print(domain, size)
+        data.append((domain, size))
+                
+showData(sorted(data,key=getSize, reverse=True))
+print('done')            
     
         
 
