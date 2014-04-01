@@ -63,7 +63,12 @@ for url in urls:
     id = getID(domain)
     print(url, domain, id)
     if os.path.isfile(os.path.join(datadir, id)) == False:
-        urllib.request.urlretrieve(url, os.path.join(datadir, id))
+        try:
+            urllib.request.urlretrieve(url, os.path.join(datadir, id))
+        except urllib.error.HTTPError:
+            print('error')
+    
+        
 
 
 
