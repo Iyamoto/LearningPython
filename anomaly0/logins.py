@@ -1,5 +1,5 @@
 import os
-id = 'cf15cb26bdb1a9eb0fdaa747b0105a19'
+id = 'a7834b8acd01611ddaf36c8cb553ab56'
 basedir = 'R:\\lucid\\anomaly\\0\\'
 uniqdir = os.path.join(basedir, 'uniq')
 loginsdir = os.path.join(basedir, 'logins')
